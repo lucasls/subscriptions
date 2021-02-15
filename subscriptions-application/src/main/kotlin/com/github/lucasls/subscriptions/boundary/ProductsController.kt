@@ -2,7 +2,6 @@ package com.github.lucasls.subscriptions.boundary
 
 import com.github.lucasls.subscriptions.boundary.dto.Price
 import com.github.lucasls.subscriptions.boundary.dto.Product
-import com.github.lucasls.subscriptions.domain.usecase.ProductUseCases
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -11,9 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 @Component
 @RestController
 @RequestMapping("/v1/products")
-class ProductsController(
-    val productUseCases: ProductUseCases
-) {
+class ProductsController {
     data class ListProductsResponse(
         val products: List<Product>
     )
@@ -25,7 +22,7 @@ class ProductsController(
                 code = "ANNUAL",
                 name = "Annual Payment",
                 price = Price(
-                    valueMinor = "83.99",
+                    value = "83.99",
                     unit = "EUR"
                 ),
                 subscriptionPeriodMonths = 12
@@ -34,7 +31,7 @@ class ProductsController(
                 code = "SEMI_ANNUAL",
                 name = "Semi-Annual Payment",
                 price = Price(
-                    valueMinor = "59.99",
+                    value = "59.99",
                     unit = "EUR"
                 ),
                 subscriptionPeriodMonths = 6
@@ -43,7 +40,7 @@ class ProductsController(
                 code = "QUARTERLY",
                 name = "Quarterly payment",
                 price = Price(
-                    valueMinor = "38.99",
+                    value = "38.99",
                     unit = "EUR"
                 ),
                 subscriptionPeriodMonths = 3
