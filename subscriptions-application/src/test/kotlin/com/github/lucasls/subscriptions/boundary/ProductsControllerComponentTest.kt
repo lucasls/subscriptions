@@ -28,7 +28,12 @@ internal class ProductsControllerComponentTest(
                         value = "83.99",
                         unit = "EUR"
                     ),
-                    subscriptionPeriodMonths = 12
+                    subscriptionPeriodMonths = 12,
+                    taxRate = "0.07",
+                    tax = Price(
+                        value = "5.87",
+                        unit = "EUR"
+                    )
                 ),
                 Product(
                     code = "SEMI_ANNUAL",
@@ -37,7 +42,12 @@ internal class ProductsControllerComponentTest(
                         value = "59.99",
                         unit = "EUR"
                     ),
-                    subscriptionPeriodMonths = 6
+                    subscriptionPeriodMonths = 6,
+                    taxRate = "0.19",
+                    tax = Price(
+                        value = "11.39",
+                        unit = "EUR"
+                    )
                 ),
                 Product(
                     code = "QUARTERLY",
@@ -46,7 +56,12 @@ internal class ProductsControllerComponentTest(
                         value = "38.99",
                         unit = "EUR"
                     ),
-                    subscriptionPeriodMonths = 3
+                    subscriptionPeriodMonths = 3,
+                    taxRate = "0.19",
+                    tax = Price(
+                        value = "7.40",
+                        unit = "EUR"
+                    )
                 ),
             )
         )
@@ -62,7 +77,12 @@ internal class ProductsControllerComponentTest(
                 value = "83.99",
                 unit = "EUR"
             ),
-            subscriptionPeriodMonths = 12
+            subscriptionPeriodMonths = 12,
+            taxRate = "0.07",
+            tax = Price(
+                value = "5.87",
+                unit = "EUR"
+            )
         )
     }
 
