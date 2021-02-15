@@ -14,18 +14,21 @@ class InMemoryProductRepository : ProductRepository {
             name = "Annual Payment",
             price = Money.parse("EUR 83.99"),
             subscriptionPeriod = Period.ofMonths(12),
+            taxRate = 0.07,
         ),
         Product(
             code = "SEMI_ANNUAL",
             name = "Semi-Annual Payment",
             price = Money.parse("EUR 59.99"),
             subscriptionPeriod = Period.ofMonths(6),
+            taxRate = 0.19,
         ),
         Product(
             code = "QUARTERLY",
             name = "Quarterly payment",
             price = Money.parse("EUR 38.99"),
             subscriptionPeriod = Period.ofMonths(3),
+            taxRate = 0.19,
         ),
     )
 

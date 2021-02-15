@@ -4,5 +4,7 @@ data class Product(
     val code: String,
     val name: String,
     val price: Price,
-    val subscriptionPeriodMonths: Int
+    val subscriptionPeriodMonths: Int,
+    val taxRate: String,
+    val tax: Price,
 )
