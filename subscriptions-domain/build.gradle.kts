@@ -13,7 +13,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    // Spring
+    // Spring (only for dependency injection and transaction management)
     implementation(platform(SpringBootPlugin.BOM_COORDINATES))
+    implementation("org.springframework:spring-context")
 
+    // Other
+    api("org.joda:joda-money:1.0.1")
 }
