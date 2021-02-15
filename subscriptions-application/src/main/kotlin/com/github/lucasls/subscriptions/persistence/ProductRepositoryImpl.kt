@@ -1,7 +1,7 @@
 package com.github.lucasls.subscriptions.persistence
 
 import com.github.lucasls.subscriptions.domain.model.Product
-import com.github.lucasls.subscriptions.domain.repository.ProductRepository
+import com.github.lucasls.subscriptions.domain.product.ProductRepository
 import org.joda.money.Money
 import org.springframework.stereotype.Component
 import java.time.Period
@@ -28,4 +28,10 @@ class ProductRepositoryImpl : ProductRepository {
             subscriptionPeriod = Period.ofMonths(3),
         ),
     )
+
+    override fun findByCode(code: String): Product? {
+        return listAll().firstOrNull {
+            it.code == code
+        }
+    }
 }

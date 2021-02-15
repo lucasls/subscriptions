@@ -2,21 +2,24 @@ package com.github.lucasls.subscriptions.boundary
 
 import com.github.lucasls.subscriptions.boundary.dto.Price
 import com.github.lucasls.subscriptions.boundary.dto.Product
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.HttpStatus
+import org.springframework.web.server.ResponseStatusException
 
 @SpringBootTest
 internal class ProductsControllerComponentTest(
     @Autowired
-    private val productsController: ProductsController
+    private val subject: ProductsController
 ) {
     @Test
     internal fun `should list all products`() {
-        val productsResponse = productsController.listProducts()
+        val result = subject.listProducts()
 
-        productsResponse shouldBe ProductsController.ListProductsResponse(
+        result shouldBe ProductsController.ListProductsResponse(
             products = listOf(
                 Product(
                     code = "ANNUAL",
@@ -47,5 +50,28 @@ internal class ProductsControllerComponentTest(
                 ),
             )
         )
+    }
+
+    @Test
+    internal fun `should find an existing product`() {
+        val result = subject.findProductByCode("ANNUAL")
+        result shouldBe Product(
+            code = "ANNUAL",
+            name = "Annual Payment",
+            price = Price(
+                value = "83.99",
+                unit = "EUR"
+            ),
+            subscriptionPeriodMonths = 12
+        )
+    }
+
+    @Test
+    internal fun `should throw not found exception when product is not found`() {
+        val exception = shouldThrow<ResponseStatusException> {
+            subject.findProductByCode("EVERY_5_YEARS")
+        }
+
+        exception.status shouldBe HttpStatus.NOT_FOUND
     }
 }
