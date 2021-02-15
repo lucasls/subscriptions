@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 import java.time.Period
 
 @Component
-class ProductRepositoryImpl : ProductRepository {
+class InMemoryProductRepository : ProductRepository {
     override fun listAll(): List<Product> = listOf(
         Product(
             code = "ANNUAL",

@@ -1,8 +1,10 @@
 package com.github.lucasls.subscriptions.boundary
 
 import com.github.lucasls.subscriptions.DomainProduct
+import com.github.lucasls.subscriptions.DomainSubscription
 import com.github.lucasls.subscriptions.boundary.dto.Price
 import com.github.lucasls.subscriptions.boundary.dto.Product
+import com.github.lucasls.subscriptions.boundary.dto.Subscription
 import org.joda.money.Money
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
@@ -18,6 +20,8 @@ interface BoundaryMappers {
         Mapping(source = "currencyUnit.code", target = "unit"),
     )
     fun Money.fromDomain(): Price
+
+    fun DomainSubscription.fromDomain(): Subscription
 
     companion object : BoundaryMappers, BoundaryMappersImpl()
 }
