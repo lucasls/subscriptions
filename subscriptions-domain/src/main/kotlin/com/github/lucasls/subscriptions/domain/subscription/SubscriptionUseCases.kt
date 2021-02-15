@@ -8,6 +8,9 @@ import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult.ProductNotFound
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult.Successful
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult.UserAlreadySubscribed
+import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus
+import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus.CANCELED
+import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus.EXPIRED
 import org.springframework.stereotype.Component
 import java.util.UUID
 
@@ -56,6 +59,27 @@ class SubscriptionUseCases(
         return subscriptionRepository.findByUserId(userId)
     }
 
+    fun setStatus(userId: UUID, status: SubscriptionStatus): SetStatusResult {
+        if (status in setOf(EXPIRED, CANCELED)) {
+            return SetStatusResult.StatusNotAllowed
+        }
+
+        val subscription = subscriptionRepository.findByUserId(userId)
+            ?.takeUnless { it.status.isFinal }
+            ?: return SetStatusResult.SubscriptionNotFound
+
+        if (subscription.status == status) {
+            return SetStatusResult.AlreadySet
+        }
+
+        subscriptionRepository.update(
+            userId = userId,
+            subscription = subscription.changeStatusTo(status)
+        )
+
+        return SetStatusResult.Successful
+    }
+
     sealed class CreateSubscriptionResult {
         data class Successful(
             val subscription: Subscription
@@ -67,5 +91,12 @@ class SubscriptionUseCases(
 
         object ProductNotFound : CreateSubscriptionResult()
         object UserAlreadySubscribed : CreateSubscriptionResult()
+    }
+
+    sealed class SetStatusResult {
+        object Successful : SetStatusResult()
+        object AlreadySet : SetStatusResult()
+        object StatusNotAllowed : SetStatusResult()
+        object SubscriptionNotFound : SetStatusResult()
     }
 }

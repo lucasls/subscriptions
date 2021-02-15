@@ -9,9 +9,13 @@ import java.util.UUID
 class InMemorySubscriptionRepository : SubscriptionRepository {
     val subscriptions = mutableMapOf<UUID, Subscription>()
 
-    override fun findByUserId(userId: UUID): Subscription? = subscriptions[userId]
+    override fun findByUserId(userId: UUID): Subscription? = subscriptions[userId]?.copy()
 
     override fun create(userId: UUID, subscription: Subscription) {
-        subscriptions[userId] = subscription
+        subscriptions[userId] = subscription.copy()
+    }
+
+    override fun update(userId: UUID, subscription: Subscription) {
+        subscriptions[userId] = subscription.copy()
     }
 }

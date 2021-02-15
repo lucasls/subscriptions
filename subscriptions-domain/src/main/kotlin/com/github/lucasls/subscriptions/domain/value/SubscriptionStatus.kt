@@ -1,10 +1,11 @@
 package com.github.lucasls.subscriptions.domain.value
 
 enum class SubscriptionStatus(
-    val preventsNewSubscription: Boolean
+    val preventsNewSubscription: Boolean,
+    val isFinal: Boolean
 ) {
-    ACTIVE(preventsNewSubscription = true),
-    PAUSED(preventsNewSubscription = true),
-    EXPIRED(preventsNewSubscription = false),
-    CANCELED(preventsNewSubscription = false),
+    ACTIVE(preventsNewSubscription = true, isFinal = false),
+    PAUSED(preventsNewSubscription = true, isFinal = false),
+    EXPIRED(preventsNewSubscription = false, isFinal = true),
+    CANCELED(preventsNewSubscription = false, isFinal = true),
 }

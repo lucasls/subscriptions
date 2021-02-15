@@ -6,4 +6,5 @@ import java.util.UUID
 interface SubscriptionRepository {
     fun findByUserId(userId: UUID): Subscription?
     fun create(userId: UUID, subscription: Subscription)
+    fun update(userId: UUID, subscription: Subscription)
 }

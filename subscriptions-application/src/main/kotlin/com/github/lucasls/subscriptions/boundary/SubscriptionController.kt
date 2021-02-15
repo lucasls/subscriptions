@@ -4,10 +4,12 @@ import com.github.lucasls.subscriptions.boundary.BoundaryMappers.Companion.fromD
 import com.github.lucasls.subscriptions.boundary.dto.Subscription
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult
+import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -58,5 +60,22 @@ class SubscriptionController(
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
         return subscription.fromDomain()
+    }
+
+    @PutMapping("/status")
+    fun setSubscriptionStatus(
+        @PathVariable userId: UUID,
+        @RequestBody subscriptionStatus: SubscriptionStatus
+    ): SubscriptionStatus {
+        return when (subscriptionUseCases.setStatus(userId, subscriptionStatus)) {
+            SubscriptionUseCases.SetStatusResult.Successful ->
+                subscriptionStatus
+            SubscriptionUseCases.SetStatusResult.AlreadySet ->
+                throw ResponseStatusException(HttpStatus.NOT_MODIFIED, "Already set to $subscriptionStatus")
+            SubscriptionUseCases.SetStatusResult.StatusNotAllowed ->
+                throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Use DELETE instead")
+            SubscriptionUseCases.SetStatusResult.SubscriptionNotFound ->
+                throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        }
     }
 }

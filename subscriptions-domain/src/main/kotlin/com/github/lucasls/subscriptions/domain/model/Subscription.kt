@@ -33,7 +33,11 @@ data class Subscription(
         }
     }
 
-    internal val statusPeriods: List<StatusPeriod> by lazy {
+    fun changeStatusTo(status: SubscriptionStatus): Subscription {
+        return copy(statusChanges = statusChanges + StatusChange(OffsetDateTime.now(), status))
+    }
+
+    private val statusPeriods: List<StatusPeriod> by lazy {
         val currentStatus = statusChanges.last().copy(changedAt = OffsetDateTime.now())
         statusChanges
             .zip(statusChanges.drop(1) + currentStatus)
