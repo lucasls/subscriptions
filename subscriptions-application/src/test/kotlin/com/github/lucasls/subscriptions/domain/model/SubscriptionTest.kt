@@ -16,6 +16,7 @@ internal class SubscriptionTest {
         name = "Annual Payment",
         price = Money.parse("EUR 83.99"),
         subscriptionPeriod = Period.ofMonths(12),
+        taxRate = 0.19
     )
 
     @Test
@@ -89,7 +90,7 @@ internal class SubscriptionTest {
     }
 
     @Test
-    internal fun `should always return expired status when expired`() {
+    internal fun `should always return expired status when expired unless cancelled`() {
         val now = OffsetDateTime.now()
         val subject = Subscription(
             id = UUID.randomUUID(),
@@ -97,5 +98,21 @@ internal class SubscriptionTest {
             createdAt = now - Period.ofYears(3)
         )
         subject.status shouldBe SubscriptionStatus.EXPIRED
+    }
+
+    @Test
+    internal fun `should always return cancelled even when expired`() {
+        val now = OffsetDateTime.now()
+        val createdAt = now - Period.ofYears(3)
+        val subject = Subscription(
+            id = UUID.randomUUID(),
+            productSnapshot = product,
+            createdAt = createdAt,
+            statusChanges = listOf(
+                StatusChange(createdAt, SubscriptionStatus.ACTIVE),
+                StatusChange(createdAt + Period.ofDays(10), SubscriptionStatus.CANCELED),
+            ),
+        )
+        subject.status shouldBe SubscriptionStatus.CANCELED
     }
 }

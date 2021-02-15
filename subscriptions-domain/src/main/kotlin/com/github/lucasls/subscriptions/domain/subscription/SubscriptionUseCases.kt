@@ -9,8 +9,6 @@ import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult.Successful
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult.UserAlreadySubscribed
 import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus
-import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus.CANCELED
-import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus.EXPIRED
 import org.springframework.stereotype.Component
 import java.util.UUID
 
@@ -60,7 +58,7 @@ class SubscriptionUseCases(
     }
 
     fun setStatus(userId: UUID, status: SubscriptionStatus): SetStatusResult {
-        if (status in setOf(EXPIRED, CANCELED)) {
+        if (status.isFinal) {
             return SetStatusResult.StatusNotAllowed
         }
 
@@ -80,6 +78,21 @@ class SubscriptionUseCases(
         return SetStatusResult.Successful
     }
 
+    fun cancel(userId: UUID): CancelResult {
+        val subscription = subscriptionRepository.findByUserId(userId)
+            ?.takeUnless { it.status.isFinal }
+            ?: return CancelResult.SubscriptionNotFound
+
+        val newSubscription = subscription.changeStatusTo(SubscriptionStatus.CANCELED)
+        subscriptionRepository.update(
+            userId = userId,
+            subscription = newSubscription
+
+        )
+
+        return CancelResult.Successful(newSubscription)
+    }
+
     sealed class CreateSubscriptionResult {
         data class Successful(
             val subscription: Subscription
@@ -93,10 +106,15 @@ class SubscriptionUseCases(
         object UserAlreadySubscribed : CreateSubscriptionResult()
     }
 
-    sealed class SetStatusResult {
-        object Successful : SetStatusResult()
-        object AlreadySet : SetStatusResult()
-        object StatusNotAllowed : SetStatusResult()
-        object SubscriptionNotFound : SetStatusResult()
+    enum class SetStatusResult {
+        Successful,
+        AlreadySet,
+        StatusNotAllowed,
+        SubscriptionNotFound,
+    }
+
+    sealed class CancelResult {
+        data class Successful(val subscription: Subscription) : CancelResult()
+        object SubscriptionNotFound : CancelResult()
     }
 }

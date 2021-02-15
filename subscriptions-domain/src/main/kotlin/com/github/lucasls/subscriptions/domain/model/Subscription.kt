@@ -26,10 +26,14 @@ data class Subscription(
     }
 
     val status: SubscriptionStatus by lazy {
-        if (isExpired) {
+        val status = statusChanges.last().status
+
+        if (status == SubscriptionStatus.CANCELED) {
+            SubscriptionStatus.CANCELED
+        } else if (isExpired) {
             SubscriptionStatus.EXPIRED
         } else {
-            statusChanges.last().status
+            status
         }
     }
 

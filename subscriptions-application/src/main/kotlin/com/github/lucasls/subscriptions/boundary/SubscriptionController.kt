@@ -3,9 +3,11 @@ package com.github.lucasls.subscriptions.boundary
 import com.github.lucasls.subscriptions.boundary.BoundaryMappers.Companion.fromDomain
 import com.github.lucasls.subscriptions.boundary.dto.Subscription
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases
+import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CancelResult
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult
 import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -60,6 +62,15 @@ class SubscriptionController(
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
         return subscription.fromDomain()
+    }
+
+    @DeleteMapping("")
+    fun cancelSubscription(@PathVariable userId: UUID): Subscription {
+        val result = subscriptionUseCases.cancel(userId)
+        return when (result) {
+            is CancelResult.Successful -> result.subscription.fromDomain()
+            is CancelResult.SubscriptionNotFound -> throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        }
     }
 
     @PutMapping("/status")
