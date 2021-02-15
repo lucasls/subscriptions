@@ -5,6 +5,7 @@ import com.github.lucasls.subscriptions.boundary.dto.Subscription
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -25,15 +26,11 @@ class SubscriptionController(
         val productCode: String,
     )
 
-    data class CreateSubscriptionResponse(
-        val subscription: Subscription
-    )
-
     @PostMapping("")
     fun createTransaction(
         @PathVariable userId: UUID,
         @RequestBody request: CreateSubscriptionRequest
-    ): CreateSubscriptionResponse {
+    ): Subscription {
         val result: CreateSubscriptionResult = subscriptionUseCases.create(
             userId = userId,
             productCode = request.productCode,
@@ -52,8 +49,14 @@ class SubscriptionController(
                 result.subscription
         }
 
-        return CreateSubscriptionResponse(
-            subscription = subscription.fromDomain()
-        )
+        return subscription.fromDomain()
+    }
+
+    @GetMapping("")
+    fun findSubscription(@PathVariable userId: UUID): Subscription {
+        val subscription = subscriptionUseCases.findByUserId(userId)
+            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+
+        return subscription.fromDomain()
     }
 }

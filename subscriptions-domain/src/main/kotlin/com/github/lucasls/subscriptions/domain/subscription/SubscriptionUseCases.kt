@@ -52,6 +52,10 @@ class SubscriptionUseCases(
         return Successful(newSubscription)
     }
 
+    fun findByUserId(userId: UUID): Subscription? {
+        return subscriptionRepository.findByUserId(userId)
+    }
+
     sealed class CreateSubscriptionResult {
         data class Successful(
             val subscription: Subscription
