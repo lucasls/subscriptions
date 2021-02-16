@@ -10,6 +10,7 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 dependencies {
     val kotestVersion: String by rootProject.extra
+    val mockkVersion: String by rootProject.extra
 
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -25,5 +26,7 @@ dependencies {
     // Test
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 }

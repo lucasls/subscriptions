@@ -37,7 +37,7 @@ data class Subscription(
         }
     }
 
-    fun changeStatusTo(status: SubscriptionStatus): Subscription {
+    fun withStatus(status: SubscriptionStatus): Subscription {
         return copy(statusChanges = statusChanges + StatusChange(OffsetDateTime.now(), status))
     }
 

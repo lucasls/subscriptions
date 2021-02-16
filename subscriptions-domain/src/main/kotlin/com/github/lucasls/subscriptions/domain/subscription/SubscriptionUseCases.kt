@@ -4,10 +4,6 @@ import com.github.lucasls.subscriptions.domain.model.Subscription
 import com.github.lucasls.subscriptions.domain.payment.PaymentGateway
 import com.github.lucasls.subscriptions.domain.payment.PaymentGateway.CreateTransactionResult
 import com.github.lucasls.subscriptions.domain.product.ProductRepository
-import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult.PaymentDeclined
-import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult.ProductNotFound
-import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult.Successful
-import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult.UserAlreadySubscribed
 import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus
 import org.springframework.stereotype.Component
 import java.util.UUID
@@ -26,12 +22,12 @@ class SubscriptionUseCases(
         paymentProvider: String
     ): CreateSubscriptionResult {
         val product = productRepository.findByCode(productCode)
-            ?: return ProductNotFound
+            ?: return CreateSubscriptionResult.ProductNotFound
 
         val subscription = subscriptionRepository.findByUserId(userId)
 
         if (subscription != null && subscription.status.preventsNewSubscription) {
-            return UserAlreadySubscribed
+            return CreateSubscriptionResult.UserAlreadySubscribed
         }
 
         val createTransactionResult = paymentGateway.createTransaction(
@@ -41,7 +37,7 @@ class SubscriptionUseCases(
         )
 
         if (createTransactionResult is CreateTransactionResult.PaymentDeclined) {
-            return PaymentDeclined(createTransactionResult.reason)
+            return CreateSubscriptionResult.PaymentDeclined(createTransactionResult.reason)
         }
 
         val newSubscription = Subscription(
@@ -50,7 +46,7 @@ class SubscriptionUseCases(
 
         subscriptionRepository.create(userId, newSubscription)
 
-        return Successful(newSubscription)
+        return CreateSubscriptionResult.Successful(newSubscription)
     }
 
     fun findByUserId(userId: UUID): Subscription? {
@@ -72,7 +68,7 @@ class SubscriptionUseCases(
 
         subscriptionRepository.update(
             userId = userId,
-            subscription = subscription.changeStatusTo(status)
+            subscription = subscription.withStatus(status)
         )
 
         return SetStatusResult.Successful
@@ -83,7 +79,7 @@ class SubscriptionUseCases(
             ?.takeUnless { it.status.isFinal }
             ?: return CancelResult.SubscriptionNotFound
 
-        val newSubscription = subscription.changeStatusTo(SubscriptionStatus.CANCELED)
+        val newSubscription = subscription.withStatus(SubscriptionStatus.CANCELED)
         subscriptionRepository.update(
             userId = userId,
             subscription = newSubscription
