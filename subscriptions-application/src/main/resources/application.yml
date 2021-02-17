@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/subscriptions"
+    username: "subscriptions"
+    password: "secret"
+  jpa:
+    database-platform: "org.hibernate.dialect.PostgreSQLDialect"
+    open-in-view: false
+#    hibernate:
+#      #TODO remove
+#      ddl-auto: create

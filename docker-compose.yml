@@ -1,0 +1,10 @@
+version: "3"
+services:
+  db:
+    image: postgres:11
+    environment:
+      POSTGRES_DB: subscriptions
+      POSTGRES_USER: subscriptions
+      POSTGRES_PASSWORD: "secret"
+    ports:
+      - "5432:5432"

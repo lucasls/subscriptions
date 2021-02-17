@@ -13,15 +13,20 @@ import org.mapstruct.Mappings
 @Mapper
 interface BoundaryMappers {
     @Mapping(source = "subscriptionPeriod.months", target = "subscriptionPeriodMonths")
-    fun DomainProduct.fromDomain(): Product
+    fun fromDomain(p: DomainProduct): Product
 
     @Mappings(
         Mapping(source = "amount", target = "value"),
         Mapping(source = "currencyUnit.code", target = "unit"),
     )
-    fun Money.fromDomain(): Price
+    fun fromDomain(m: Money): Price
 
-    fun DomainSubscription.fromDomain(): Subscription
+    fun fromDomain(s: DomainSubscription): Subscription
 
-    companion object : BoundaryMappers, BoundaryMappersImpl()
+    companion object {
+        val instance = BoundaryMappersImpl()
+        fun DomainProduct.fromDomain() = instance.fromDomain(this)
+        fun Money.fromDomain() = instance.fromDomain(this)
+        fun DomainSubscription.fromDomain() = instance.fromDomain(this)
+    }
 }

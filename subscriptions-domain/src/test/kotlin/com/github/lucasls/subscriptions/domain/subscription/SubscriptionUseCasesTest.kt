@@ -44,7 +44,6 @@ internal class SubscriptionUseCasesTest {
         )
 
         val subscription = Subscription(
-            id = SUBSCRIPTION_ID,
             productSnapshot = product,
         )
 
