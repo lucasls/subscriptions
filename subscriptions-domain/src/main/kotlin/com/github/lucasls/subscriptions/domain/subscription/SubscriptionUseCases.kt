@@ -49,12 +49,10 @@ class SubscriptionUseCases(
         return CreateSubscriptionResult.Successful(newSubscription)
     }
 
-    fun findByUserId(userId: UUID): Subscription? {
-        return subscriptionRepository.findLatestByUserId(userId)
-    }
+    fun findLatestByUserId(userId: UUID): Subscription? = subscriptionRepository.findLatestByUserId(userId)
 
     fun setStatus(userId: UUID, status: SubscriptionStatus): SetStatusResult {
-        if (status.isFinal) {
+        if (!status.canBeSet) {
             return SetStatusResult.StatusNotAllowed
         }
 
@@ -80,10 +78,10 @@ class SubscriptionUseCases(
             ?: return CancelResult.SubscriptionNotFound
 
         val newSubscription = subscription.withStatus(SubscriptionStatus.CANCELED)
+
         subscriptionRepository.update(
             userId = userId,
             subscription = newSubscription
-
         )
 
         return CancelResult.Successful(newSubscription)

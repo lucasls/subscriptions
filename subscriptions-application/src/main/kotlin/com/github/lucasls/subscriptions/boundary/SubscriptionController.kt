@@ -58,7 +58,7 @@ class SubscriptionController(
 
     @GetMapping("")
     fun findSubscription(@PathVariable userId: UUID): Subscription {
-        val subscription = subscriptionUseCases.findByUserId(userId)
+        val subscription = subscriptionUseCases.findLatestByUserId(userId)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
         return subscription.fromDomain()

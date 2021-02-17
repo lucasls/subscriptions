@@ -1,8 +1,12 @@
 package com.github.lucasls.subscriptions.domain.product
 
+import com.github.lucasls.subscriptions.domain.model.Product
 import org.springframework.stereotype.Component
 
 @Component
 class ProductUseCases(
     val productRepository: ProductRepository
-) : ProductCrud by productRepository
+) {
+    fun listAll(): List<Product> = productRepository.listAll()
+    fun findByCode(code: String): Product? = productRepository.findByCode(code)
+}
