@@ -10,7 +10,8 @@ create table product
 
 create table subscription
 (
-    user_id                    uuid primary key,
+    id                         uuid primary key,
+    user_id                    uuid             not null,
     product_code               text             not null,
     product_name               text             not null,
     price_value                text             not null,
@@ -20,11 +21,13 @@ create table subscription
     created_at                 timestamp
 );
 
+create index on subscription (user_id);
+
 create table subscription_status_changes
 (
-    subscription_user_id uuid not null references subscription,
-    changed_at           timestamp,
-    status               text
+    subscription_id uuid not null references subscription,
+    changed_at      timestamp,
+    status          text
 );
 
 INSERT INTO product (code, name, price_value, price_unit, subscription_period_months, tax_rate)

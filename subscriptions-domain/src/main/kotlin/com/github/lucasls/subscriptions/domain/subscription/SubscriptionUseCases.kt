@@ -24,7 +24,7 @@ class SubscriptionUseCases(
         val product = productRepository.findByCode(productCode)
             ?: return CreateSubscriptionResult.ProductNotFound
 
-        val subscription = subscriptionRepository.findByUserId(userId)
+        val subscription = subscriptionRepository.findLatestByUserId(userId)
 
         if (subscription != null && subscription.status.preventsNewSubscription) {
             return CreateSubscriptionResult.UserAlreadySubscribed
@@ -50,7 +50,7 @@ class SubscriptionUseCases(
     }
 
     fun findByUserId(userId: UUID): Subscription? {
-        return subscriptionRepository.findByUserId(userId)
+        return subscriptionRepository.findLatestByUserId(userId)
     }
 
     fun setStatus(userId: UUID, status: SubscriptionStatus): SetStatusResult {
@@ -58,7 +58,7 @@ class SubscriptionUseCases(
             return SetStatusResult.StatusNotAllowed
         }
 
-        val subscription = subscriptionRepository.findByUserId(userId)
+        val subscription = subscriptionRepository.findLatestByUserId(userId)
             ?.takeUnless { it.status.isFinal }
             ?: return SetStatusResult.SubscriptionNotFound
 
@@ -75,7 +75,7 @@ class SubscriptionUseCases(
     }
 
     fun cancel(userId: UUID): CancelResult {
-        val subscription = subscriptionRepository.findByUserId(userId)
+        val subscription = subscriptionRepository.findLatestByUserId(userId)
             ?.takeUnless { it.status.isFinal }
             ?: return CancelResult.SubscriptionNotFound
 

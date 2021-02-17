@@ -10,10 +10,13 @@ import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.FetchType
 import javax.persistence.Id
+import javax.persistence.OrderBy
 
 @Entity
 data class Subscription(
     @Id
+    var id: UUID,
+
     var userId: UUID,
 
     @Embedded
@@ -26,5 +29,6 @@ data class Subscription(
     var createdAt: OffsetDateTime,
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @OrderBy("changedAt")
     var statusChanges: MutableList<StatusChange>
 )

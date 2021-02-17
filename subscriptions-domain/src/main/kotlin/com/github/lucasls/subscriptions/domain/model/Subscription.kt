@@ -3,8 +3,10 @@ package com.github.lucasls.subscriptions.domain.model
 import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus
 import java.time.Duration
 import java.time.OffsetDateTime
+import java.util.UUID
 
 data class Subscription(
+    val id: UUID = UUID.randomUUID(),
     val productSnapshot: Product,
     val createdAt: OffsetDateTime = OffsetDateTime.now(),
     val statusChanges: List<StatusChange> = listOf(StatusChange(createdAt, SubscriptionStatus.ACTIVE)),

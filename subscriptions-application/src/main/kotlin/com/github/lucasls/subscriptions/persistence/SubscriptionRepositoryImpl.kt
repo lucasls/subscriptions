@@ -5,7 +5,6 @@ import com.github.lucasls.subscriptions.domain.subscription.SubscriptionReposito
 import com.github.lucasls.subscriptions.persistence.PersistenceMappers.Companion.fromDomain
 import com.github.lucasls.subscriptions.persistence.PersistenceMappers.Companion.toDomain
 import com.github.lucasls.subscriptions.persistence.jpa.SubscriptionJpaRepository
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import java.util.UUID
 
@@ -13,8 +12,8 @@ import java.util.UUID
 class SubscriptionRepositoryImpl(
     val subscriptionJpaRepository: SubscriptionJpaRepository
 ) : SubscriptionRepository {
-    override fun findByUserId(userId: UUID): Subscription? =
-        subscriptionJpaRepository.findByIdOrNull(userId)
+    override fun findLatestByUserId(userId: UUID): Subscription? =
+        subscriptionJpaRepository.findFirstByUserIdOrderByCreatedAtDesc(userId)
             ?.toDomain()
 
     override fun create(userId: UUID, subscription: Subscription) {

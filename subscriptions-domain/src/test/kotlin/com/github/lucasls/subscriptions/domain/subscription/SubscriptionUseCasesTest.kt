@@ -66,7 +66,7 @@ internal class SubscriptionUseCasesTest {
                 row(SubscriptionStatus.PAUSED),
             ) { status ->
                 every { productRepository.findByCode("ANNUAL") } returns product
-                every { subscriptionRepository.findByUserId(USER_ID) } returns subscription.withStatus(status)
+                every { subscriptionRepository.findLatestByUserId(USER_ID) } returns subscription.withStatus(status)
 
                 val result = subject.create(
                     userId = USER_ID,
@@ -87,7 +87,7 @@ internal class SubscriptionUseCasesTest {
                 row(null),
             ) { subscription ->
                 every { productRepository.findByCode("ANNUAL") } returns product
-                every { subscriptionRepository.findByUserId(USER_ID) } returns subscription
+                every { subscriptionRepository.findLatestByUserId(USER_ID) } returns subscription
                 every { paymentGateway.createTransaction(any(), any(), any()) } throws RuntimeException("CHECKPOINT")
 
                 shouldThrowMessage("CHECKPOINT") {
@@ -104,7 +104,7 @@ internal class SubscriptionUseCasesTest {
         @Test
         internal fun `should return it when payment is declined`() {
             every { productRepository.findByCode("ANNUAL") } returns product
-            every { subscriptionRepository.findByUserId(USER_ID) } returns null
+            every { subscriptionRepository.findLatestByUserId(USER_ID) } returns null
             every { paymentGateway.createTransaction(any(), any(), any()) } returns
                 CreateTransactionResult.PaymentDeclined("Payment rejected")
 
@@ -121,7 +121,7 @@ internal class SubscriptionUseCasesTest {
         @Test
         internal fun `should create a subscription and return it`() {
             every { productRepository.findByCode("ANNUAL") } returns product
-            every { subscriptionRepository.findByUserId(USER_ID) } returns null
+            every { subscriptionRepository.findLatestByUserId(USER_ID) } returns null
             every { paymentGateway.createTransaction(any(), any(), any()) } returns
                 CreateTransactionResult.Successful(UUID.randomUUID())
             every { subscriptionRepository.create(USER_ID, any()) } returns Unit
