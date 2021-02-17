@@ -13,6 +13,7 @@ dependencies {
     val mapStructVersion = "1.4.2.Final"
     val springsdocVersion = "1.5.4"
     val kotestVersion: String by rootProject.extra
+    val kotlinLoggingVersion: String by rootProject.extra
 
     // Project
     implementation(project(":subscriptions-domain"))
@@ -39,8 +40,10 @@ dependencies {
 
     // Other
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    testImplementation("org.testcontainers:postgresql:1.15.2")
 }

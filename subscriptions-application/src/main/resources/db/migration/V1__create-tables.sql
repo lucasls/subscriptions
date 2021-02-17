@@ -29,13 +29,3 @@ create table subscription_status_changes
     changed_at      timestamp,
     status          text
 );
-
-INSERT INTO product (code, name, price_value, price_unit, subscription_period_months, tax_rate)
-VALUES ('ANNUAL', 'Annual Payment', 83.99, 'EUR', 12, 0.07);
-
-INSERT INTO product (code, name, price_value, price_unit, subscription_period_months, tax_rate)
-VALUES ('SEMI_ANNUAL', 'Semi-Annual Payment', 59.99, 'EUR', 6, 0.19);
-
-INSERT INTO product (code, name, price_value, price_unit, subscription_period_months, tax_rate)
-VALUES ('QUARTERLY', 'Quarterly payment', 38.99, 'EUR', 3, 0.19);
-

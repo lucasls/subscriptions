@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 buildscript {
     extra["kotestVersion"] = "4.4.1"
     extra["mockkVersion"] = "1.10.6"
+    extra["kotlinLoggingVersion"] = "1.12.0"
 }
 
 plugins {

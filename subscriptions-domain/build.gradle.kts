@@ -11,6 +11,7 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 dependencies {
     val kotestVersion: String by rootProject.extra
     val mockkVersion: String by rootProject.extra
+    val kotlinLoggingVersion: String by rootProject.extra
 
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -22,6 +23,7 @@ dependencies {
 
     // Other
     api("org.joda:joda-money:1.0.1")
+    implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
 
     // Test
     testImplementation("org.junit.jupiter:junit-jupiter-api")
