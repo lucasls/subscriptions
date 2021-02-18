@@ -1,3 +1,3 @@
 run:
 	docker-compose up -d
-	./gradlew bootRun
+	SPRING_PROFILES_ACTIVE=demo ./gradlew bootRun

@@ -10,12 +10,14 @@ import com.github.lucasls.subscriptions.persistence.jpa.entity.Price
 import com.github.lucasls.subscriptions.persistence.jpa.entity.Product
 import mu.KotlinLogging
 import org.joda.money.Money
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import java.math.BigDecimal
 import java.time.OffsetDateTime
 import java.util.UUID
 import javax.annotation.PostConstruct
 
+@Profile("demo")
 @Component
 class DemoDataSetup(
     val productJpaRepository: ProductJpaRepository,
