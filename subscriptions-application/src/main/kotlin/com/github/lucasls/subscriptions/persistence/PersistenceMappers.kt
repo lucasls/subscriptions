@@ -54,7 +54,7 @@ interface PersistenceMappers {
     fun toDomain(s: Subscription): DomainSubscription
 
     // Other ---
-    
+
     class CustomMappers {
         fun Price.toDomain(): Money = Money.of(
             CurrencyUnit.of(unit.toUpperCase()),

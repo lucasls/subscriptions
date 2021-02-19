@@ -9,5 +9,4 @@ class SubscriptionsApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }
