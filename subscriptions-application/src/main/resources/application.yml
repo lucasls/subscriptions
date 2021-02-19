@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: "demo"
   datasource:
     url: "jdbc:postgresql://localhost:5432/subscriptions"
     username: "subscriptions"
@@ -6,6 +8,3 @@ spring:
   jpa:
     database-platform: "org.hibernate.dialect.PostgreSQLDialect"
     open-in-view: false
-#    hibernate:
-#      #TODO remove
-#      ddl-auto: create
