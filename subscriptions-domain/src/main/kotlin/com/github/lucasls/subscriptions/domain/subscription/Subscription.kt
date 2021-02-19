@@ -44,8 +44,8 @@ data class Subscription(
     private val statusPeriods: List<StatusPeriod> by lazy {
         val currentStatus = statusChanges.last().copy(changedAt = OffsetDateTime.now())
         statusChanges
-            .zip(statusChanges.drop(1) + currentStatus)
-            .map { it.toStatusPeriod() }
+            .zip(statusChanges.drop(1) + currentStatus) // "zips" all statuses to their next status
+            .map { it.toStatusPeriod() } // finds the periods between status and next status, for each pair
     }
 
     private val totalPausedDuration: Duration by lazy {
