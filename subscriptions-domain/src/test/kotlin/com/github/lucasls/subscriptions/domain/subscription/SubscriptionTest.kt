@@ -1,9 +1,6 @@
-package com.github.lucasls.subscriptions.domain.model
+package com.github.lucasls.subscriptions.domain.subscription
 
 import com.github.lucasls.subscriptions.domain.product.Product
-import com.github.lucasls.subscriptions.domain.subscription.StatusChange
-import com.github.lucasls.subscriptions.domain.subscription.Subscription
-import com.github.lucasls.subscriptions.domain.subscription.SubscriptionStatus
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.joda.money.Money
