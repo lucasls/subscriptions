@@ -15,14 +15,19 @@ plugins {
     kotlin("plugin.jpa") version kotlinVersion apply false
     id("org.springframework.boot") version "2.4.2" apply false
     id("io.spring.dependency-management") version "1.0.11.RELEASE" apply false
+    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
 }
 
 group = "com.github.lucasls"
 
-subprojects {
+allprojects {
     repositories {
         mavenCentral()
     }
+}
+
+subprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {

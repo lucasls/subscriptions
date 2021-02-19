@@ -185,3 +185,4 @@ The external Gateway is not a real implementation, only a simple fake.
 - [Kotest](https://kotest.io/) (Kotlin test platform and assertions)
 - [MapStruct](https://mapstruct.org/) (Compile time generated mappers)
 - [Kotlin Logging](https://github.com/MicroUtils/kotlin-logging) (Slf4J wrapper for Kotlin)
+- [Ktlint](https://github.com/pinterest/ktlint) (Kotlin linter)
