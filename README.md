@@ -183,6 +183,7 @@ The external Gateway is not a real implementation, only a simple fake.
 - Docker
 - [Springdoc](https://springdoc.org/) (Swagger UI and OpenAPI)
 - [Kotest](https://kotest.io/) (Kotlin test platform and assertions)
+- [Testcontainers](https://www.testcontainers.org/) (Docker containers for tests)
 - [MapStruct](https://mapstruct.org/) (Compile time generated mappers)
 - [Kotlin Logging](https://github.com/MicroUtils/kotlin-logging) (Slf4J wrapper for Kotlin)
 - [Ktlint](https://github.com/pinterest/ktlint) (Kotlin linter)
