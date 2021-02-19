@@ -123,7 +123,7 @@ internal class SubscriptionUseCasesTest {
             every { productRepository.findByCode("ANNUAL") } returns product
             every { subscriptionRepository.findLatestByUserId(USER_ID) } returns null
             every { paymentGateway.createTransaction(any(), any(), any()) } returns
-                CreateTransactionResult.Successful()
+                CreateTransactionResult.Successful(UUID.randomUUID())
 
             val result = subject.create(
                 userId = USER_ID,
