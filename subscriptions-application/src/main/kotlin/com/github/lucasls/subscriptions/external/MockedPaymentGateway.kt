@@ -17,6 +17,6 @@ class MockedPaymentGateway : PaymentGateway {
     ): CreateTransactionResult = if (token != "decline-transaction") {
         Successful(UUID.randomUUID())
     } else {
-        PaymentDeclined("Payment was declined by Payment Processor")
+        PaymentDeclined("Payment was declined by the Payment Processor")
     }
 }

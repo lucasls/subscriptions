@@ -109,7 +109,7 @@ class DemoDataSetup(
             )
         )
 
-        // Active subscription with old product proce and tax
+        // Active subscription with old product price and tax
         subscriptionRepository.create(
             userId = UUID.fromString("00000000-0000-0000-0000-000000000004"),
             subscription = Subscription(
