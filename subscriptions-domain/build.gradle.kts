@@ -24,6 +24,7 @@ dependencies {
     // Other
     api("org.joda:joda-money:1.0.1")
     implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
+    implementation("org.slf4j:slf4j-api")
 
     // Test
     testImplementation("org.junit.jupiter:junit-jupiter-api")
