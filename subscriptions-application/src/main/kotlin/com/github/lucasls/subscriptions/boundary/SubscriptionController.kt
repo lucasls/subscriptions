@@ -2,10 +2,10 @@ package com.github.lucasls.subscriptions.boundary
 
 import com.github.lucasls.subscriptions.boundary.BoundaryMappers.Companion.fromDomain
 import com.github.lucasls.subscriptions.boundary.dto.Subscription
+import com.github.lucasls.subscriptions.domain.subscription.SubscriptionStatus
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CancelResult
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult
-import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

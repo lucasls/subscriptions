@@ -1,6 +1,5 @@
-package com.github.lucasls.subscriptions.domain.model
+package com.github.lucasls.subscriptions.domain.subscription
 
-import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus
 import java.time.OffsetDateTime
 
 data class StatusChange(

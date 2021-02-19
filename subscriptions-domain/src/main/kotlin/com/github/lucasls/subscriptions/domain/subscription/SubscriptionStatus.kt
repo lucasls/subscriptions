@@ -1,4 +1,4 @@
-package com.github.lucasls.subscriptions.domain.value
+package com.github.lucasls.subscriptions.domain.subscription
 
 enum class SubscriptionStatus(
     val isFinal: Boolean,

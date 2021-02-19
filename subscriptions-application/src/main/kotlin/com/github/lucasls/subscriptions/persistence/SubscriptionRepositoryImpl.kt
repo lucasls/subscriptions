@@ -1,6 +1,6 @@
 package com.github.lucasls.subscriptions.persistence
 
-import com.github.lucasls.subscriptions.domain.model.Subscription
+import com.github.lucasls.subscriptions.domain.subscription.Subscription
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionRepository
 import com.github.lucasls.subscriptions.persistence.PersistenceMappers.Companion.fromDomain
 import com.github.lucasls.subscriptions.persistence.PersistenceMappers.Companion.toDomain

@@ -1,6 +1,5 @@
 package com.github.lucasls.subscriptions.domain.product
 
-import com.github.lucasls.subscriptions.domain.model.Product
 import org.springframework.stereotype.Component
 
 @Component

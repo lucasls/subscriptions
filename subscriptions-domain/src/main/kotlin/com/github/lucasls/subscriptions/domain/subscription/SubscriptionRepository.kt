@@ -1,6 +1,5 @@
 package com.github.lucasls.subscriptions.domain.subscription
 
-import com.github.lucasls.subscriptions.domain.model.Subscription
 import java.util.UUID
 
 interface SubscriptionRepository {

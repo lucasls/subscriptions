@@ -1,6 +1,6 @@
-package com.github.lucasls.subscriptions.domain.model
+package com.github.lucasls.subscriptions.domain.subscription
 
-import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus
+import com.github.lucasls.subscriptions.domain.product.Product
 import java.time.Duration
 import java.time.OffsetDateTime
 import java.util.UUID

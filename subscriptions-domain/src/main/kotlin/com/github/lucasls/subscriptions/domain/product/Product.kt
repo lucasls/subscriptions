@@ -1,4 +1,4 @@
-package com.github.lucasls.subscriptions.domain.model
+package com.github.lucasls.subscriptions.domain.product
 
 import org.joda.money.Money
 import java.math.RoundingMode

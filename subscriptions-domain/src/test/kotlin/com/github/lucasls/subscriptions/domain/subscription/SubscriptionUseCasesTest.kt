@@ -1,14 +1,12 @@
 package com.github.lucasls.subscriptions.domain.subscription
 
-import com.github.lucasls.subscriptions.domain.model.Product
-import com.github.lucasls.subscriptions.domain.model.Subscription
 import com.github.lucasls.subscriptions.domain.payment.PaymentGateway
 import com.github.lucasls.subscriptions.domain.payment.PaymentGateway.CreateTransactionResult
+import com.github.lucasls.subscriptions.domain.product.Product
 import com.github.lucasls.subscriptions.domain.product.ProductRepository
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CancelResult
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.CreateSubscriptionResult
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionUseCases.SetStatusResult
-import com.github.lucasls.subscriptions.domain.value.SubscriptionStatus
 import io.kotest.assertions.throwables.shouldThrowMessage
 import io.kotest.data.blocking.forAll
 import io.kotest.data.row
@@ -125,7 +123,7 @@ internal class SubscriptionUseCasesTest {
             every { productRepository.findByCode("ANNUAL") } returns product
             every { subscriptionRepository.findLatestByUserId(USER_ID) } returns null
             every { paymentGateway.createTransaction(any(), any(), any()) } returns
-                CreateTransactionResult.Successful(UUID.randomUUID())
+                CreateTransactionResult.Successful()
 
             val result = subject.create(
                 userId = USER_ID,

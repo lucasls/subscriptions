@@ -1,7 +1,7 @@
 package com.github.lucasls.subscriptions
 
-import com.github.lucasls.subscriptions.domain.model.Subscription
 import com.github.lucasls.subscriptions.domain.product.ProductRepository
+import com.github.lucasls.subscriptions.domain.subscription.Subscription
 import com.github.lucasls.subscriptions.domain.subscription.SubscriptionRepository
 import com.github.lucasls.subscriptions.persistence.jpa.ProductJpaRepository
 import com.github.lucasls.subscriptions.persistence.jpa.entity.Price
